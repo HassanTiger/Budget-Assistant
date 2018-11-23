@@ -1,5 +1,5 @@
 '''
-This program helps you read the csv file that you can download from your bank
+This program helps you read the csv file that you can download from BofA
 '''
 def main():
     transactions_dictionary= load_file()
@@ -8,6 +8,8 @@ def main():
     high_times= int(input("Enter the number of high transactions you want to see: "))
     for i in range(high_times):
         print("highest transaction is:", highest_tran(transactions_dictionary))
+    
+
     
     
 def load_file():
@@ -21,9 +23,11 @@ def load_file():
         line= line.split(",")
         tran= line[2][1:len(line[2])-1]
         if not tran.isalpha():
-
             tran= (float(tran))
-            transactions_dictionary[line[1]]= tran
+            if line[1] in transactions_dictionary.keys():
+                transactions_dictionary[line[1]]+= tran
+            else:
+                transactions_dictionary[line[1]]= tran
     return transactions_dictionary
 
 
