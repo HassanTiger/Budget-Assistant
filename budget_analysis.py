@@ -1,5 +1,5 @@
 '''
-This program helps you read the csv file that you can download from BofA
+This program helps you read the csv file that you can download from your bank
 '''
 def main():
     transactions_dictionary= load_file()
