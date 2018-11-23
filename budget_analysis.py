@@ -1,14 +1,20 @@
 '''
 This program helps you read the csv file that you can download from BofA
+SEARCH FOR: #enter the name of transaction you looking for
 '''
 def main():
+    helper= open("README.md", 'r')
+    helper_file= helper.readlines()
     transactions_dictionary= load_file()
     print("Total Spending:",sum(transactions_dictionary.values()))
-    
-    high_times= int(input("Enter the number of high transactions you want to see: "))
-    for i in range(high_times):
-        print("highest transaction is:", highest_tran(transactions_dictionary))
-    
+    while True: 
+        order= input("Other Inqueries: ")
+        if order.startswith("SEARCH FOR"):
+            search_for(transactions_dictionary, order)
+        elif order.startswith("HIGHEST"):
+            highest_tran(transactions_dictionary, order)
+        elif order.startswith("HELP"):
+            print(helper_file)
 
     
     
@@ -30,12 +36,17 @@ def load_file():
                 transactions_dictionary[line[1]]= tran
     return transactions_dictionary
 
-
-def highest_tran(tran_dict):
-    highest= min(tran_dict.values())
-    for keys, values in tran_dict.items():
-        if values== highest:
-            high= keys + " with a value of "+ str(highest)
-            del tran_dict[keys]
-            return high
+def search_for(my_dict, order):
+    sentence= order.strip().split("FOR")
+    return my_dict[sentence[2].strip()]
+    
+def highest_tran(tran_dict, order):
+    sentence= order.strip().split(" ")
+    for i in range(sentence[1]):
+        highest= min(tran_dict.values())
+        for keys, values in tran_dict.items():
+            if values== highest:
+                high= keys + " with a value of "+ str(highest)
+                del tran_dict[keys]
+                return high
 main()
